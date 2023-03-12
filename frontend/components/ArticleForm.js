@@ -9,10 +9,7 @@ export default function ArticleForm(props) {
   const { currentArticle, updateArticle, postArticle, setCurrentArticleId } = props
 
   useEffect(() => {
-    // ✨ implement
-    // Every time the `currentArticle` prop changes, we should check it for truthiness:
-    // if it's truthy, we should set its title, text and topic into the corresponding
-    // values of the form. If it's not, we should reset the form back to initial values.
+
     currentArticle ? setValues(currentArticle) : setValues(initialFormValues)
   }, [currentArticle])
 
@@ -22,6 +19,7 @@ export default function ArticleForm(props) {
   }
 
   const onSubmit = evt => {
+    
     evt.preventDefault()
     // ✨ implement
     // We must submit a new post or update an existing one,

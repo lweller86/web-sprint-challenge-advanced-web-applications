@@ -115,19 +115,21 @@ export default function App() {
   // to inspect the response from the server.
 
 
-  const updateArticle = ({ article_id, article }) => {
+  const updateArticle = ( article_id, article ) => {
+
+    console.log(article_id)
     loadScreen();
     axiosWithAuth().put(`/articles/${article_id}`, article)
-      .then(res => {
-        setArticles(articles.map(
-          (update) => {return update.article_id === article.article_id ? res.data.article : update}));
-        
-        setMessage(res.data.message);
-        setSpinnerOn(false)
-      })
-      .catch(err => console.error(err))
-      .finally(() => setSpinnerOn(false));
-    }
+    .then(res => {
+      console.log(res)
+      setArticles(articles.map((update) => {return update.article_id === article.article_id ? res.data.article : update}));
+      setMessage(res.data.message);
+      setSpinnerOn(false);
+    })
+    .catch(err => {
+      console.log(err);
+    })
+}
 
     const deleteArticle = article_id => {
       // ✨ implement
@@ -170,6 +172,7 @@ export default function App() {
                     setCurrentArticleId={setCurrentArticleId}
                     postArticle={postArticle}
                     updateArticle={updateArticle}
+                    currentArticle={articles.find((update) => update.article_id === currentArticleId)}
                   />
                   <Articles
                     setCurrentArticleId={setCurrentArticleId}
@@ -177,7 +180,7 @@ export default function App() {
                     getArticles={getArticles}
                     articles={articles}
                     setSpinnerOn={setSpinnerOn}
-                    currentArticleId={currentArticleId}
+                   
                     redirectToLogin={redirectToLogin}
 
                   />
