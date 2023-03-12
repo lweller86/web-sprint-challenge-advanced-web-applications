@@ -1,24 +1,34 @@
 import React, { useEffect } from 'react'
 import { Navigate } from 'react-router-dom'
 import PT from 'prop-types'
+import axios from 'axios';
+import axiosWithAuth from '../axios';
+
+
 
 export default function Articles(props) {
 
-  const { getArticles, articles } = props;
+  const { getArticles, articles, setSpinnerOn, setCurrentArticleId, currentArticleId, deleteArticle, redirectToLogin  } = props;
   // ✨ where are my props? Destructure them here
 
   // ✨ implement conditional logic: if no token exists
   // we should render a Navigate to login screen (React Router v.6)
 
-  useEffect(() => {
-    getArticles()
+  useEffect( () => {
+   
+    if(!localStorage.getItem("token")) {
+      redirectToLogin();
+    }else {
+      getArticles()
+    }
+  }, []);
+  
+  
+    //
 
-    // ✨ grab the articles here, on first render only
-  })
+ 
 
-  return (
-    // ✨ fix the JSX: replace `Function.prototype` with actual functions
-    // and use the articles prop to generate articles
+ return(
     <div className="articles">
       <h2>Articles</h2>
       {
@@ -33,8 +43,8 @@ export default function Articles(props) {
                   <p>Topic: {art.topic}</p>
                 </div>
                 <div>
-                  <button disabled={true} onClick={Function.prototype}>Edit</button>
-                  <button disabled={true} onClick={Function.prototype}>Delete</button>
+                  <button disabled={currentArticleId ? true : false} onClick={() => setCurrentArticleId(art.article_id)}>Edit</button>
+                  <button disabled={currentArticleId ? true : false} onClick={() => deleteArticle(art.article_id)}>Delete</button>
                 </div>
               </div>
             )
@@ -42,6 +52,7 @@ export default function Articles(props) {
       }
     </div>
   )
+
 }
 
 // 🔥 No touchy: Articles expects the following props exactly:
