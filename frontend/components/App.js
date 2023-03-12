@@ -37,9 +37,9 @@ export default function App() {
    setSpinnerOn(true)
     axiosWithAuth().post('/login', values)
     .then(res => {
-      console.log(res)
       localStorage.setItem('token', res.data.token)
       navigate('/articles')
+      setSpinnerOn(false)
       
     })
     .catch(err=>{
@@ -56,9 +56,15 @@ export default function App() {
   
 
   const getArticles = () => {
- //   setMessage('');
- //   axios.get(articlesUrl)
- //   .then(res =>)
+    setMessage('')
+    axiosWithAuth().get('/articles')
+    .then(res =>{
+      setMessage(res.data.message)
+      setArticles(res.data.articles)
+    })
+    .catch(err => {
+      setMessage(err.response)
+    }, []);
 
    }
 
