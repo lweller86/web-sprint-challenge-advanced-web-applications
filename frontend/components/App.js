@@ -128,6 +128,7 @@ export default function App() {
     })
     .catch(err => {
       console.log(err);
+      setSpinnerOn(false)
     })
 }
 
@@ -143,6 +144,7 @@ export default function App() {
      })
      .catch(err => {
        console.log(err)
+       setSpinnerOn(false)
      })
  }
     

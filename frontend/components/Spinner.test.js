@@ -1,5 +1,23 @@
-// Import the Spinner component into this file and test
-// that it renders what it should for the different props it can take.
-test('sanity', () => {
-  expect(true).toBe(false)
-})
+import React from "react";
+import Spinner from "./Spinner";
+import { screen, render } from "@testing-library/react";
+
+test("sanity", () => {
+  expect(true).not.toBe(false);
+});
+
+test("Renders Without Errors", () => {
+  render(<Spinner />);
+});
+
+test("Spinner does not render with function set to false.  ", () => {
+  render(<Spinner on={false} />);
+  const pleaseWait = screen.queryByText(/Please wait/i);
+  expect(pleaseWait).toBeNull();
+});
+
+test("Renders functional when set to true ", () => {
+  render(<Spinner on={true} />);
+  const pleaseWait = screen.queryByText(/Please wait/i);
+  expect(pleaseWait).toBeTruthy();
+});
